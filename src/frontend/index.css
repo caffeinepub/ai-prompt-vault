@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ──────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/assets/fonts/CabinetGrotesk.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/assets/fonts/InstrumentSerif.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* ── Deep midnight palette ── */
+    --background:       0.10 0.006 264;
+    --foreground:       0.94 0.010 85;
+
+    --card:             0.13 0.010 265;
+    --card-foreground:  0.92 0.012 85;
+
+    --popover:          0.15 0.012 265;
+    --popover-foreground: 0.92 0.012 85;
+
+    /* Gold primary */
+    --primary:          0.75 0.14  76;
+    --primary-foreground: 0.10 0.008 264;
+
+    --secondary:        0.18 0.016 265;
+    --secondary-foreground: 0.85 0.010 85;
+
+    --muted:            0.16 0.012 265;
+    --muted-foreground: 0.52 0.020 265;
+
+    /* Amber accent */
+    --accent:           0.68 0.16  68;
+    --accent-foreground: 0.10 0.006 264;
+
+    --destructive:      0.62 0.22  25;
+    --destructive-foreground: 0.97 0 0;
+
+    --border:           0.24 0.018 265;
+    --input:            0.20 0.016 265;
+    --ring:             0.65 0.14  76;
+
+    /* Gold glow */
+    --gold-muted:       0.68 0.12  76;
+    --gold-bright:      0.82 0.16  85;
+
+    /* Chart */
+    --chart-1: 0.75 0.14  76;
+    --chart-2: 0.65 0.18  45;
+    --chart-3: 0.55 0.14  265;
+    --chart-4: 0.70 0.16  160;
+    --chart-5: 0.80 0.12  20;
+
+    --sidebar: 0.13 0.010 265;
+    --sidebar-foreground: 0.94 0.010 85;
+    --sidebar-primary: 0.75 0.14  76;
+    --sidebar-primary-foreground: 0.10 0.008 264;
+    --sidebar-accent: 0.18 0.016 265;
+    --sidebar-accent-foreground: 0.85 0.010 85;
+    --sidebar-border: 0.24 0.018 265;
+    --sidebar-ring: 0.65 0.14  76;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-cabinet antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 20% 10%, oklch(0.18 0.05 265 / 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 90%, oklch(0.20 0.04 60 / 0.15) 0%, transparent 55%);
+  }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: "Fraunces", serif;
+  }
+
+  .font-serif-accent {
+    font-family: "Instrument Serif", serif;
+  }
+
+  .font-cabinet {
+    font-family: "Cabinet Grotesk", sans-serif;
+  }
+
+  .text-gold {
+    color: oklch(var(--primary));
+  }
+
+  .text-gold-muted {
+    color: oklch(var(--gold-muted));
+  }
+
+  .bg-gold {
+    background-color: oklch(var(--primary));
+  }
+
+  .border-gold {
+    border-color: oklch(var(--primary) / 0.4);
+  }
+
+  .glow-gold {
+    box-shadow:
+      0 0 20px oklch(var(--primary) / 0.25),
+      0 0 60px oklch(var(--primary) / 0.10);
+  }
+
+  .glow-gold-sm {
+    box-shadow: 0 0 12px oklch(var(--primary) / 0.20);
+  }
+
+  .card-vault {
+    background: oklch(var(--card));
+    border: 1px solid oklch(var(--border));
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-vault:hover {
+    border-color: oklch(var(--primary) / 0.45);
+    box-shadow:
+      0 4px 24px oklch(0 0 0 / 0.4),
+      0 0 0 1px oklch(var(--primary) / 0.15);
+    transform: translateY(-2px);
+  }
+
+  .prompt-card {
+    background: oklch(var(--secondary));
+    border: 1px solid oklch(var(--border));
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .prompt-card:hover {
+    border-color: oklch(var(--primary) / 0.35);
+    background: oklch(var(--muted));
+  }
+
+  .grain-overlay::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    z-index: 9999;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(var(--primary) / 0.4) 30%,
+      oklch(var(--primary) / 0.4) 70%,
+      transparent 100%
+    );
+  }
+
+  .hero-glow {
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, oklch(var(--primary) / 0.12) 0%, transparent 70%);
+  }
+
+  .badge-gold {
+    background: oklch(var(--primary) / 0.15);
+    color: oklch(var(--primary));
+    border: 1px solid oklch(var(--primary) / 0.35);
+    font-family: "Cabinet Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+  }
+
+  .scrollbar-vault::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-vault::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+  }
+  .scrollbar-vault::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 2px;
+  }
+  .scrollbar-vault::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--primary) / 0.5);
+  }
+}
